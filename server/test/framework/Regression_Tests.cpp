@@ -339,11 +339,19 @@ namespace {
         return result;
     }
 
-    TEST_F(Regression_Test, DISABLED_Pointers_Alignment) {
+    TEST_F(Regression_Test, Pointers_Alignment) {
         fs::path source = getTestFilePath("issue-195.c");
         auto [testGen, status] = createTestForFunction(source, 8);
 
         ASSERT_TRUE(status.ok()) << status.error_message();
+        std::vector<tests::Tests::MethodTestCase> &testCases =
+            testGen.tests.at(source).methods.begin().value().testCases;
+
+        EXPECT_GE(testCases.size(), 2)
+            << " Number of test cases (" << testCases.size()
+            << ") less than"
+               " expected ("
+            << 2 << ") for function " << "list_sum" << ".";
 
         for (const tests::Tests::MethodTestCase &testCase :
              testGen.tests.at(source).methods.begin().value().testCases) {
