@@ -339,18 +339,18 @@ namespace {
         return result;
     }
 
-    TEST_F(Regression_Test, Pointers_Alignment) {
+    TEST_F(Regression_Test, DISABLED_Pointers_Alignment) {
         fs::path source = getTestFilePath("issue-195.c");
         auto [testGen, status] = createTestForFunction(source, 8);
 
         ASSERT_TRUE(status.ok()) << status.error_message();
 
-        // for (const tests::Tests::MethodTestCase &testCase :
-        //      testGen.tests.at(source).methods.begin().value().testCases) {
-        //     for (const auto &paramValue : testCase.paramValues) {
-        //         EXPECT_TRUE(checkAlignmentInNode(paramValue));
-        //     }
-        // }
+        for (const tests::Tests::MethodTestCase &testCase :
+             testGen.tests.at(source).methods.begin().value().testCases) {
+            for (const auto &paramValue : testCase.paramValues) {
+                EXPECT_TRUE(checkAlignmentInNode(paramValue));
+            }
+        }
     }
 
     TEST_F(Regression_Test, Generate_Folder) {
