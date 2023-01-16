@@ -2870,7 +2870,8 @@ namespace {
                         return stoi(testCase.paramValues.front().view->getEntryValue(nullptr)) % 3 == 1;
                     },
                     [] (const tests::Tests::MethodTestCase& testCase) {
-                        return stoi(testCase.paramValues.front().view->getEntryValue(nullptr)) % 3 == 2;
+                        auto paramValue = stoi(testCase.paramValues.front().view->getEntryValue(nullptr));
+                        return paramValue % 3 != 0 && paramValue % 3 != 1;
                     }
                 })
         );
